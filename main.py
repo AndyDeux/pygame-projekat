@@ -18,6 +18,7 @@ FPS = 60
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
 WHITE = (255, 255, 255)
+BLUE = (0, 0, 255)
 
 #neke tu varijable
 
@@ -28,8 +29,8 @@ round_over = False
 ROUND_OVER_COOLDOWN = 2000
 
 #define font
-count_font = pygame.font.Font("C:/Users/LENOVO/PycharmProjects/pythonProject/turok.ttf", 80)
-score_font = pygame.font.Font("C:/Users/LENOVO/PycharmProjects/pythonProject/turok.ttf", 30)
+count_font = pygame.font.Font("freesansbold.ttf", 80)
+score_font = pygame.font.Font("freesansbold.ttf", 30)
 
 #tekst
 def tekst(text, font, text_col, x, y):
@@ -69,9 +70,20 @@ while run:
     draw_health_bar(napadac_1.health, 20, 20)
     draw_health_bar(napadac_2.health, 580, 20)
 
+    if (napadac_1.alive == False):
+        score[1] += 1
+        napadac_1.health = 100
+        napadac_2.health = 100
+        napadac_1.alive = True
+    elif (napadac_2.alive == False):
+        score[0] += 1
+        napadac_2.health = 100
+        napadac_1.health = 100
+        napadac_2.alive = True
+
     #tekst
     tekst("P1: " + str(score[0]), score_font, RED, 20, 60)
-    tekst("P2: " + str(score[1]), score_font, RED, 580, 60)
+    tekst("P2: " + str(score[1]), score_font, BLUE, 580, 60)
 
     napadac_1.update()
     napadac_2.update()
@@ -82,8 +94,8 @@ while run:
 
 
     # pozovi_napadaca
-    napadac_1.pozovi(screen)
-    napadac_2.pozovi(screen)
+    napadac_1.pozovi1(screen)
+    napadac_2.pozovi2(screen)
 
     # event
     for event in pygame.event.get():

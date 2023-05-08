@@ -55,9 +55,8 @@ class Fighter:
                     self.jump = True
 
                 # napad
-                if key[pygame.K_KP1]:
+                if key[pygame.K_RSHIFT]:
                     self.attack(target)
-                    self.cooldown = 30
 
         #dodavanje gravitacije
         self.vel_y += GRAVITACIJA
@@ -96,14 +95,23 @@ class Fighter:
 
     def attack(self, target):
         if self.attack_cooldown == 0:
-            self.cooldown = True
+            self.cooldown = False
             attacking_rect = pygame.Rect(self.rect.centerx - (2 * self.rect.width * self.flip), self.rect.y,
                                          2 * self.rect.width, self.rect.height)
             if attacking_rect.colliderect(target.rect):
                 target.health -= 10
-            self.cooldown = False
-            self.attack_cooldown = 10
+                self.cooldown = False
+                self.attack_cooldown = 10
 
-    def pozovi(self, surface):
+    def pozovi1(self, surface):
         pygame.draw.rect(surface, (255, 0, 0), self.rect)
+        font = pygame.font.Font('freesansbold.ttf', 32)
+        tekst = font.render("P1", True, (255, 0, 0))
         surface.blit(surface, (self.rect.x, self.rect.y), self.rect)
+        surface.blit(tekst, (self.rect.x + 20, self.rect.y - 30))
+    def pozovi2(self, surface):
+        pygame.draw.rect(surface, (0, 0, 255), self.rect)
+        font = pygame.font.Font('freesansbold.ttf', 32)
+        tekst = font.render("P2", True, (0, 0, 255))
+        surface.blit(surface, (self.rect.x, self.rect.y), self.rect)
+        surface.blit(tekst, (self.rect.x + 20, self.rect.y - 30))
