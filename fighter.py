@@ -7,8 +7,7 @@ class Fighter:
         self.rect = pygame.Rect((x, y, 80, 150))
         self.vel_y = 0
         self.jump = False
-        self.cooldown = 0
-        self.attack_type = 0
+        self.cooldown = False
         self.health = 100
         self.alive = True
         self.update_time = pygame.time.get_ticks()
@@ -42,7 +41,6 @@ class Fighter:
                 # napad
                 if key[pygame.K_e]:
                     self.attack(target)
-                    self.cooldown = 30
 
             if self.player == 2:
                 # pokretanje
@@ -98,12 +96,13 @@ class Fighter:
 
     def attack(self, target):
         if self.attack_cooldown == 0:
-            self.cooldown = 30
+            self.cooldown = True
             attacking_rect = pygame.Rect(self.rect.centerx - (2 * self.rect.width * self.flip), self.rect.y,
                                          2 * self.rect.width, self.rect.height)
             if attacking_rect.colliderect(target.rect):
                 target.health -= 10
-        self.attack_cooldown = 10
+            self.cooldown = False
+            self.attack_cooldown = 10
 
     def pozovi(self, surface):
         pygame.draw.rect(surface, (255, 0, 0), self.rect)
